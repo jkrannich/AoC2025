@@ -20,31 +20,64 @@ pub fn run() {
     //for each (start, end) in ranges
     //for number in start..=end
     //convert number -> string
-    //if string.length modulo 2 = 0 -> possible invalid id
-    //for each entry in possible numbers list/vec
-    //split number in half
-    //if first half of digits == second half of digits -> invalid input
-    //add to result int
-    //return result int
+    //n = string.legnth()
+    //divide length into divisors (i.e length 9 -> 1,3)
+    //3 -> divide string into 3 parts
+    //compare if third 1 = third 2
+    //if not equal -> continue
+    //if equal -> add to result
+    //return result
 
     let mut result = 0;
 
     for (start, end) in &ranges {
         for number in *start..=*end {
             let s = number.to_string();
+            let n = s.len();
 
-            if s.len() % 2 == 1 {
-                continue;
-            }
+            let divisors = find_divisors(n);
 
-            let half = s.len()/2;
-            let first_half = &s[..half];
-            let second_half = &s[half..];
+            for divisor in divisors {
+                let block_size = divisor;
+                let pattern = &s[..block_size];
 
-            if first_half == second_half {
-                result += number;
+                let mut all_match = true;
+
+                let num_blocks = n / block_size;
+
+                if num_blocks < 2 {
+                    continue;
+                }
+
+                for block_idx in 1..num_blocks {
+                    let start = block_idx * block_size;
+                    let end = start + block_size;
+
+                    let chunk = &s[start..end];
+
+                    if chunk != pattern {
+                        all_match = false;
+                        break;
+                    }
+                }
+
+                if all_match {
+                    result += number;
+                    break;
+                }
             }
             println!("{}", result)
         }
     }
+}
+
+fn find_divisors(n: usize) -> Vec<usize> {
+    let mut divisors = Vec::new();
+
+    for d in 1..n {
+        if n % d == 0 {
+            divisors.push(d);
+        }
+    }
+    divisors
 }
