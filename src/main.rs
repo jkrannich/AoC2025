@@ -1,5 +1,5 @@
 mod day1_part1;
-mod day2;
+mod day2_part1;
 mod day1_part2;
 
 fn main() {
@@ -9,7 +9,7 @@ fn main() {
     match day {
         "1.1" => day1_part1::run(),
         "1.2" => day1_part2::run(),
-        "2" => day2::run(),
+        "2.1" => day2_part1::run(),
         _ => println!("Unknown day: {day}"),
     }
 }
