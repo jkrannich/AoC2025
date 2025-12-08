@@ -1,6 +1,8 @@
 pub fn run() {
     let input = include_str!("../inputs/day3input.txt");
 
+    let mut total_sum = 0;
+
     for line in input.lines() {
         let digits: Vec<u64> = line
             .chars()
@@ -8,29 +10,22 @@ pub fn run() {
             .map(|c| c.to_digit(10).unwrap() as u64)
             .collect();
 
-        let mut total_sum = 0;
         let mut best_combination=0;
 
-        for &a in &digits {
-            for &b in &digits {
-                if a == b {
-                    continue;
-                }
+        for i in 0..digits.len() {
+            for j in i+1..digits.len() {
+                let a = digits[i];
+                let b = digits[j];
 
-                let candidate = concat(a, b);
+                let candidate = a*10+b;
 
                 if candidate > best_combination {
                     best_combination = candidate;
-                    total_sum += best_combination;
                 }
             }
         }
-        println!("Total sum: {total_sum}");
+        total_sum += best_combination;
         println!("{best_combination}");
     }
-}
-
-pub fn concat(a: u64, b: u64) -> u64 {
-    let s = format!("{a}{b}");
-    s.parse::<u64>().unwrap()
+    println!("Total sum: {total_sum}");
 }
