@@ -31,4 +31,16 @@ pub fn run() {
     //if yes -> fresh
     //if no -> rotten
     //fresh++
+
+    let mut fresh_count = 0;
+
+    'id_loop: for id in ingredients {
+        for &(start, end) in &ranges {
+            if id >= start && id <= end {
+                fresh_count += 1;
+                continue 'id_loop;
+            }
+        }
+    }
+    println!("Fresh ingredients: {}", fresh_count);
 }
