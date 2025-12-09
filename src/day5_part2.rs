@@ -21,10 +21,30 @@ pub fn run() {
     //merge overlapping ranges?
     //then count
 
-
     ranges.sort_by_key(|&(start, _end)| start);
 
     for (s, e) in ranges.iter().take(10) {
         println!("{s}-{e}");
     }
+
+    let mut merged: Vec<(i64, i64)> = Vec::new();
+
+    for (start, end) in ranges {
+        if let Some((last_start, last_end)) = merged.last_mut() {
+            if start <= *last_end + 1 {
+                *last_end = (*last_end).max(end);
+            } else {
+                merged.push((start, end));
+            }
+        } else {
+            merged.push((start, end));
+        }
+    }
+
+    let mut total: i64 = 0;
+    for (start, end) in merged {
+        total += end - start + 1;
+    }
+
+    println!("Total fresh ingredients count: {total}");
 }
