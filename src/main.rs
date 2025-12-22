@@ -13,6 +13,8 @@ mod day6_part1;
 mod day6_part2;
 mod day7_part1;
 mod day7_part2;
+mod day8_part1;
+mod day8_part2;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -33,6 +35,8 @@ fn main() {
         "6.2" => day6_part2::run(),
         "7.1" => day7_part1::run(),
         "7.2" => day7_part2::run(),
+        "8.1" => day8_part1::run(),
+        "8.2" => day8_part2::run(),
         "9.1" => day9_part1::run(),
         _ => println!("Unknown day: {day}"),
     }
